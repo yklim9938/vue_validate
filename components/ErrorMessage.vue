@@ -30,6 +30,7 @@ export default {
     methods: {
         validate() {
             if (this.value != undefined && this.value != null) {
+                if (!this.required && typeof this.value == 'string' && this.value.length < 1) return
                 this.types.forEach(t => {
                     if (this[t]) {
                         const error = validation[t](this.value, this[t])

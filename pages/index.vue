@@ -3,8 +3,8 @@
     <Form :onSubmit="formSubmit">
       <div class="mb-4">
         <label class="mb-2">Name</label>
-        <input type="text" name="Name" class="orca" minlength="4" autocomplete="off" v-model="name">
-        <!-- <ErrorMessage v-model="name" required minlength="4"></ErrorMessage> -->
+        <input type="text" name="Name" autocomplete="off" v-model="name">
+        <ErrorMessage v-model="name" minlength="4"></ErrorMessage>
       </div>
       <div class="mb-4">
         <label class="mb-2">Email</label>
