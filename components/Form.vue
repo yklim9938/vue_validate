@@ -15,27 +15,31 @@ export default {
         }
     },
     methods: {
-        inputEvent(e) {
-            const orcaId = e.target.dataset.orcaId
-            // remove error element
-            const errorEls = this.getErrorEl(e.target.parentElement)
-            errorEls.forEach(e => e.remove())
+        validateInput(input, index) {
+            let value = input.value
+            if (input.type == 'file') value = input.files
+            if (!input.required && typeof value == 'string' && value.length < 1) return
 
+            const orcaId = input.dataset.orcaId
             this.inputAttributes[orcaId].forEach(a => {
-                const errorEls = this.getErrorEl(e.target.parentElement)
+                const errorEls = this.getErrorEl(input.parentElement)
                 if (errorEls.length > 0) return // already has error, return
 
                 // create error element
-                let value = e.target.value
-                if (e.target.type == 'file') value = e.target.files
                 const error = validation[a.type](value, a.value)
                 if (error.type) {
                     const errorEl = document.createElement('div')
                     errorEl.classList.add('orca-error')
                     errorEl.innerHTML = error.message
-                    e.target.parentElement.insertBefore(errorEl, e.target.nextSibling)
+                    input.parentElement.insertBefore(errorEl, input.nextSibling)
                 }
             })
+        },
+        inputEvent(e) {
+            // remove error element
+            const errorEls = this.getErrorEl(e.target.parentElement)
+            errorEls.forEach(e => e.remove())
+            this.validateInput(e.target)
         },
         getEventType(input) {
             let eventType = 'input'
@@ -46,14 +50,23 @@ export default {
            return wrapper.querySelectorAll('.orca-error')
         },
         submitHandler(e) {
+            this.inputs.forEach(i => {
+                this.validateInput(i)
+            })
+
+            this.$children.forEach(c => {
+                c.validate()
+            })
+
             if (typeof this.onSubmit == 'function') {
-                let isValid = true
-                this.inputs.forEach(i => {
-                    const errorEls = this.getErrorEl(i.parentElement)
+                setTimeout(() => {
+                    let isValid = true
+                    const errorEls = this.getErrorEl(this.$refs.form)
+
                     if (errorEls.length > 0) isValid = false
-                })
-                e.isValid = isValid
-                this.onSubmit(e)
+                    e.isValid = isValid
+                    this.onSubmit(e)
+                }, 50)
             }
         }
     },

@@ -3,7 +3,8 @@
     <Form :onSubmit="formSubmit">
       <div class="mb-4">
         <label class="mb-2">Name</label>
-        <input type="text" name="Name" class="orca" required minlength="4" autocomplete="off">
+        <input type="text" name="Name" class="orca" minlength="4" autocomplete="off" v-model="name">
+        <!-- <ErrorMessage v-model="name" required minlength="4"></ErrorMessage> -->
       </div>
       <div class="mb-4">
         <label class="mb-2">Email</label>
@@ -40,7 +41,14 @@
 </template>
 
 <script>
+import ErrorMessage from '../components/ErrorMessage.vue'
 export default {
+  components: { ErrorMessage },
+  data() {
+    return {
+      name: ''
+    }
+  },
   methods: {
     formSubmit(e) {
       console.log(e)
