@@ -8,9 +8,9 @@ Wrap your form in &lt;Form&gt; component.  Add `class="orca"` to the inputs that
 ```html
 <Form :onSubmit="submitHandler">
     <div class="mb-3">
-	    <label class="form-label">Email</label>
-	    <input class="orca" type="text" name="email" required validemail autocmplete="off">
-	</div>
+        <label class="form-label">Email</label>
+        <input class="orca" type="text" name="email" required validemail autocmplete="off">
+    </div>
     <div class="mb-3">
         <label class="form-label">Password</label>
         <input class="orca" type="password" name="password" required minlength="6" autocmplete="off" >
