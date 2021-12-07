@@ -1,5 +1,4 @@
 const MESSAGES = {
-    valid: 'OK',
     required: 'This field is required.',
     minlength: 'Input must be at least {{n}} characters.',
     maxlength: 'Input cannot be more than {{n}} characters.',

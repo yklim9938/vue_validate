@@ -13,7 +13,7 @@ Wrap your form in &lt;Form&gt; component.  Add `class="orca"` to the inputs that
     </div>
     <div class="mb-3">
         <label class="form-label">Password</label>
-        <input class="orca" type="password" name="password" required minlength="6" autocmplete="off" >
+        <input class="orca" type="password" name="password" required minlength="6" autocmplete="off">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </Form>
