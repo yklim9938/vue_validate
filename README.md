@@ -1,69 +1,65 @@
+
 # vue-form-validation
 
-## Build Setup
+## Basic Usage
 
-```bash
-# install dependencies
-$ npm install
+Wrap your form in &lt;Form&gt; component.  Add `class="orca"` to the inputs that you wish to validate. The &lt;Form&gt; will automatically picks up attributes such as `required`, `minlength`, ...etc and perform validation on your inputs. 
 
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
+```html
+<Form :onSubmit="submitHandler">
+    <div class="mb-3">
+	    <label class="form-label">Email</label>
+	    <input class="orca" type="text" name="email" required validemail autocmplete="off">
+	    </div>
+	    <div class="mb-3">
+		    <label class="form-label">Password</label>
+		    <input class="orca" type="password" name="password" required minlength="6" autocmplete="off" >
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+</Form>
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+## Validation Attributes
+1. `required`
+2. `minlength`
+3. `maxlength`
+4. `min`
+5. `max`
+6. `accept`
+7. `equalto`  - Check whether the input's value is equal to another
+8. `validemail` - Value must be a valid email format
+9. `maxfile` - Used on `<input type="file" multiple>` to limit maximum file
+10. `maxsize` - Used on `<input type="file">` to limit the file size in bytes
 
-## Special Directories
+### `equalto` Usage
+```html
+<input type="password" class="orca" id="pass" equalto="cPass">
+<input type="password" class="orca" id="cPass" label="Confirm Password">
+```
+The value of `#pass` must equal to `#cPass`, else an error will be shown:
+ "Input must match with Confirm Password."
+ Note that the `label` in `#cPass` is used in the validation message.
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+## Submit Event
+Use `onSubmit` prop to handle your submit event. The `event` parameter will be passed. You don't have to run `e.preventDefault()` as the &lt;Form&gt; component already prevented default.
 
-### `assets`
+If one of the inputs is not valid, `event.isValid` will be `false`
+```html
+<Form :onSubmit="submitHandler">
+```
+```js
+submitHandler(e) { // e is the event param
+	console.log(e.isValid) // true if valid, false if not
+}
+``` 
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+## Validation for custom input components
+If you have custom input components such as datepicker, range slider,... etc, you can use the `<ErrorMessage>`
+component to add validation message. Just pass in the value of your component into `<ErrorMessage>` and add in the validation attributes. E.g.
+```html
+<MyCustomInput v-model="myValue"></MyCustomInput>
+<ErrorMessage v-model="myValue" minlength="4" required></ErrorMessage>
+```
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+## Changing validation message & Adding custom validation
+In /assets/js/validation.js, you can change the default message in `MESSAGES`, or add/modify validation in `rules`
