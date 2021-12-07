@@ -10,12 +10,12 @@ Wrap your form in &lt;Form&gt; component.  Add `class="orca"` to the inputs that
     <div class="mb-3">
 	    <label class="form-label">Email</label>
 	    <input class="orca" type="text" name="email" required validemail autocmplete="off">
-	    </div>
-	    <div class="mb-3">
-		    <label class="form-label">Password</label>
-		    <input class="orca" type="password" name="password" required minlength="6" autocmplete="off" >
-		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+	</div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input class="orca" type="password" name="password" required minlength="6" autocmplete="off" >
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </Form>
 ```
 
@@ -49,7 +49,7 @@ If one of the inputs is not valid, `event.isValid` will be `false`
 ```
 ```js
 submitHandler(e) { // e is the event param
-	console.log(e.isValid) // true if valid, false if not
+  console.log(e.isValid) // true if valid, false if not
 }
 ``` 
 
