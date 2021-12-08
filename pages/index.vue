@@ -4,7 +4,7 @@
       <div class="mb-4">
         <label class="mb-2">Name</label>
         <input type="text" name="Name" autocomplete="off" v-model="name">
-        <ErrorMessage v-model="name" minlength="4"></ErrorMessage>
+        <ErrorMessage v-model="name" required minlength="4"></ErrorMessage>
       </div>
       <div class="mb-4">
         <label class="mb-2">Email</label>
@@ -16,11 +16,11 @@
       </div>
       <div class="mb-4">
         <label class="mb-2">Password</label>
-        <input type="password" class="orca" autocomplete="off" maxsize="1024" equalto="cPass">
+        <input type="password" class="orca" autocomplete="off" maxsize="1024" id="pass" label="Password">
       </div>
       <div class="mb-4">
         <label class="mb-2">Confirm Password</label>
-        <input type="password" class="orca" autocomplete="off" maxsize="1024" id="cPass" label="CCPassword">
+        <input type="password" class="orca" autocomplete="off" maxsize="1024" equalto="pass">
       </div>
       <div class="mb-4">
         <label class="mb-2">Select</label>

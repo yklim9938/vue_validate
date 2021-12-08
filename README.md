@@ -33,8 +33,8 @@ Wrap your form in &lt;Form&gt; component.  Add `class="orca"` to the inputs that
 
 ### `equalto` Usage
 ```html
-<input type="password" class="orca" id="pass" equalto="cPass">
-<input type="password" class="orca" id="cPass" label="Confirm Password">
+<input type="password" class="orca" id="pass" label="Confirm Password">
+<input type="password" class="orca" equalto="pass">
 ```
 The value of `#pass` must equal to `#cPass`, else an error will be shown:
  "Input must match with Confirm Password."
