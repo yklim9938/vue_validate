@@ -11,29 +11,28 @@ export default {
     data() {
         return {
             inputs: [],
-            inputAttributes: []
         }
     },
     methods: {
-        validateInput(input, index) {
+        validateInput(input) {
             let value = input.value
             if (input.type == 'file') value = input.files
             if (!input.required && typeof value == 'string' && value.length < 1) return
 
-            const orcaId = input.dataset.orcaId
-            this.inputAttributes[orcaId].forEach(a => {
+            for (let a = 0; a < input.attributes.length; a++) {
                 const errorEls = this.getErrorEl(input.parentElement)
-                if (errorEls.length > 0) return // already has error, return
+                if (errorEls.length > 0) break // already has error, exit loop
+                if (!validation[input.attributes[a].name]) continue // not validation attribute, skip
 
-                // create error element
-                const error = validation[a.type](value, a.value)
+               // create error element
+                const error = validation[input.attributes[a].name](value, input.attributes[a].value)
                 if (error.type) {
                     const errorEl = document.createElement('div')
                     errorEl.classList.add('orca-error')
                     errorEl.innerHTML = error.message
                     input.parentElement.insertBefore(errorEl, input.nextSibling)
                 }
-            })
+            }
         },
         inputEvent(e) {
             // remove error element
@@ -75,18 +74,6 @@ export default {
 
         this.inputs.forEach((i, index) => {
             i.addEventListener(this.getEventType(i), this.inputEvent)
-            i.dataset.orcaId = index
-
-            let attributes = []
-            for (let a = 0; a < i.attributes.length; a++) {
-                if (validation[i.attributes[a].name]) {
-                    attributes.push({
-                        type: i.attributes[a].name,
-                        value: i.attributes[a].value
-                    })
-                }
-            }
-            this.inputAttributes.push(attributes)
         })
     },
     beforeDestroy() {
